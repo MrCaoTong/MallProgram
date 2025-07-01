@@ -24,7 +24,10 @@
         <el-table-column prop="category_name" label="所属分类" />
         <el-table-column prop="status" label="上架状态" width="100">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeStatus(scope.row)" />
+            <el-tooltip v-if="scope.row.category_status === 0" content="该分类已被禁用，需要将该商品分类打开，才能上架" placement="top">
+              <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" :disabled="true" @change="changeStatus(scope.row)" />
+            </el-tooltip>
+            <el-switch v-else v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeStatus(scope.row)" />
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180">
@@ -81,7 +84,7 @@
 </template>
 
 <script>
-import { getGoods, addGoods, updateGoods, deleteGoods, batchUpdateGoodsStatus } from '@/api/goods';
+import { getGoods, addGoods, updateGoods, deleteGoods, batchUpdateGoodsStatus, updateGoodsStatus } from '@/api/goods';
 import { getCategories } from '@/api/category';
 import { quillEditor } from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
@@ -135,8 +138,25 @@ export default {
       this.goodsList = res.data.items || res.data;
     },
     async fetchCategories() {
+      // 获取启用分类
       const res = await getCategories();
-      this.categoryList = res.data;
+      let categories = res.data || [];
+      // 如果是编辑商品，且当前商品分类不在启用分类中
+      if (this.form.id && this.form.category_id && !categories.find(c => c.id === this.form.category_id)) {
+        // 额外查出该分类
+        try {
+          const resp = await this.$axios({
+            url: `/admin/category/all`,
+            method: 'get'
+          });
+          const allCats = resp.data.data || [];
+          const disabledCat = allCats.find(c => c.id === this.form.category_id);
+          if (disabledCat) {
+            categories.push({ ...disabledCat, name: disabledCat.name + '（已禁用）' });
+          }
+        } catch (e) {}
+      }
+      this.categoryList = categories;
     },
     openAddDialog() {
       this.dialogTitle = '新增商品';
@@ -200,12 +220,24 @@ export default {
         return;
       }
       const ids = this.multipleSelection.map(item => item.id);
-      await batchUpdateGoodsStatus(ids, status);
-      this.$message.success('批量操作成功');
-      this.fetchGoods();
+      try {
+        await batchUpdateGoodsStatus(ids, status);
+        this.$message.success('批量操作成功');
+        this.fetchGoods();
+      } catch (e) {
+        this.$message.error((e.response && e.response.data && e.response.data.message) || '批量操作失败');
+      }
     },
     async changeStatus(row) {
-      // 预留上下架功能
+      try {
+        // 只处理上架/下架
+        await updateGoodsStatus(row.id, row.status);
+        this.$message.success('状态更新成功');
+      } catch (e) {
+        // 回滚状态
+        row.status = row.status === 1 ? 0 : 1;
+        this.$message.error((e.response && e.response.data && e.response.data.message) || '操作失败');
+      }
     }
   }
 };

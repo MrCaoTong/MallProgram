@@ -1,4 +1,5 @@
 import service from './index';
+import { getCategories } from './category';
 
 export function getGoods(params) {
   return service({

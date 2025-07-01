@@ -38,4 +38,12 @@ export function updateCategoryStatus(id, status) {
       method: 'post',
       data: { id, status }
     });
-  } 
+  }
+
+export function getAllCategories(params) {
+  return service({
+    url: '/admin/category/all',
+    method: 'get',
+    params
+  });
+} 

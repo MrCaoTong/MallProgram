@@ -35,6 +35,7 @@ router.post('/category/add', auth.checkAuth, categoryController.addCategory);
 router.post('/category/update', auth.checkAuth, categoryController.updateCategory);
 router.post('/category/delete', auth.checkAuth, categoryController.deleteCategory);
 router.post('/category/status', auth.checkAuth, categoryController.updateCategoryStatus);
+router.get('/category/all', auth.checkAuth, categoryController.getAllCategoryList);
 
 // 商品管理相关路由
 router.get('/goods/list', auth.checkAuth, goodsController.getGoodsList);

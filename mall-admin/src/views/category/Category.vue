@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { getCategories, addCategory, updateCategory, deleteCategory, updateCategoryStatus } from '@/api/category';
+import { getAllCategories, addCategory, updateCategory, deleteCategory, updateCategoryStatus } from '@/api/category';
 
 export default {
   name: 'Category',
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     async fetchCategories() {
-      const res = await getCategories();
+      const res = await getAllCategories();
       this.categoryList = res.data;
     },
     handleAdd() {
