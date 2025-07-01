@@ -1,0 +1,22 @@
+{
+  "name": "mall-server",
+  "version": "1.0.0",
+  "description": "商城项目的后端API服务",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "md5": "^2.3.0",
+    "multer": "^2.0.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

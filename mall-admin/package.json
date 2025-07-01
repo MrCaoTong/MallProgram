@@ -1,0 +1,25 @@
+{
+  "name": "mall-admin",
+  "version": "1.0.0",
+  "description": "商城管理后台系统，基于Vue.js、Element UI、Node.js、Express",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "echarts": "^4.9.0",
+    "element-ui": "^2.15.14",
+    "js-cookie": "^3.0.5",
+    "nprogress": "^0.2.0",
+    "vue": "^2.6.14",
+    "vue-echarts": "^4.1.0",
+    "vue-router": "^3.5.4",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^4.5.19",
+    "babel-eslint": "^10.1.0"
+  }
+}

@@ -1,0 +1,36 @@
+import service from './index';
+
+export function getSalesStats() {
+  return service({
+    url: 'admin/stats/sales',
+    method: 'get'
+  });
+}
+
+export function getSalesTrend() {
+  return service({
+    url: 'admin/stats/sales-trend',
+    method: 'get'
+  });
+}
+
+export function getHotGoods() {
+  return service({
+    url: 'admin/stats/hot-goods',
+    method: 'get'
+  });
+}
+
+export function getOrderStats() {
+  return service({
+    url: 'admin/stats/orders',
+    method: 'get'
+  });
+}
+
+export function getConversionStats() {
+  return service({
+    url: 'admin/stats/conversion',
+    method: 'get'
+  });
+} 
