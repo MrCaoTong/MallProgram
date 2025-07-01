@@ -23,7 +23,7 @@
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-popconfirm title="确定删除吗？" @onConfirm="handleDelete(scope.row.id)" style="margin-left: 10px;">
+            <el-popconfirm title="确定删除吗？" @confirm="handleDelete(scope.row.id)" style="margin-left: 10px;">
               <el-button size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
           </template>
