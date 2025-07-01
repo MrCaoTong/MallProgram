@@ -55,23 +55,6 @@ export default new Router({
           meta: { title: '订单统计' }
         },
         {
-          path: 'stats/hot-goods',
-          name: 'StatsHotGoods',
-          component: () => import('@/views/stats/HotGoods.vue'),
-          meta: { title: '热销商品' }
-        },
-        {
-          path: 'stats/conversion',
-          name: 'StatsConversion',
-          component: () => import('../views/stats/Conversion.vue')
-        },
-        {
-          path: 'stats/trend',
-          name: 'StatsTrend',
-          component: () => import('@/views/stats/Trend.vue'),
-          meta: { title: '销售趋势' }
-        },
-        {
           path: 'system',
           name: 'System',
           component: () => import('../views/system/System.vue')

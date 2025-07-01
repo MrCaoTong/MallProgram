@@ -49,17 +49,25 @@
 
 ## 会话总结（自动追加，历史累积）
 
-- **主要目的**：为商城后台管理系统首页增加数据汇总、趋势图表等仪表盘功能。
-- **完成的主要任务**：实现首页数据卡片、近7天销售趋势和订单趋势折线图，前后端API联调，修复相关交互体验。
-- **关键决策和解决方案**：采用ECharts+vue-echarts@4实现图表，后端SQL自动补全日期，前端computed适配数据，首页作为默认入口。
-- **使用的技术栈**：Vue2、ElementUI、vue-echarts@4、ECharts、Node.js、Express、MySQL。
-- **修改了哪些文件**：
-  - mall-admin/src/views/home/Home.vue
-  - mall-admin/src/api/stats.js
+- **主要目的**：数据统计页面合并精简，提升后台管理系统的可维护性和用户体验。
+- **完成的主要任务**：
+  1. 只保留"销售统计""订单统计"两个数据统计子页面，合并原有趋势、热销、转化率等内容。
+  2. 重构 Orders.vue，UI风格参照产品原型，集成订单概览、转化率统计、订单状态分布。
+  3. 重构 Sales.vue，集成销售额卡片、趋势图、热销商品排行。
+  4. 删除 mall-admin/src/views/stats/Trend.vue、HotGoods.vue、Conversion.vue。
+  5. 清理 mall-admin/src/router/index.js 中无用路由，只保留 sales/orders。
+  6. 清理 mall-admin/src/layout/AdminLayout.vue 侧边栏无用菜单项，只保留 sales/orders。
+- **关键决策和解决方案**：
+  - 统一数据统计相关内容，避免重复和入口分散。
+  - 路由、菜单、页面三处同步，确保导航和功能一致。
+  - 采用 ECharts 统一图表展示，数据接口参数支持今日/本周/本月切换。
+- **涉及的主要文件**：
+  - mall-admin/src/views/stats/Sales.vue
+  - mall-admin/src/views/stats/Orders.vue
+  - mall-admin/src/views/stats/Trend.vue（已删除）
+  - mall-admin/src/views/stats/HotGoods.vue（已删除）
+  - mall-admin/src/views/stats/Conversion.vue（已删除）
   - mall-admin/src/router/index.js
   - mall-admin/src/layout/AdminLayout.vue
-  - mall-admin/src/main.js
-  - mall-server/src/controllers/admin/statsController.js
-  - mall-server/src/routes/admin.js
 
 （本内容为累积追加，详见 .cursorrules 约定） 

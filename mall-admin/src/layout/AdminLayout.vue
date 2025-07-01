@@ -28,10 +28,7 @@
             <span>数据统计</span>
           </template>
           <el-menu-item index="/admin/stats/sales">销售统计</el-menu-item>
-          <el-menu-item index="/admin/stats/trend">销售趋势</el-menu-item>
-          <el-menu-item index="/admin/stats/hot-goods">热销商品</el-menu-item>
           <el-menu-item index="/admin/stats/orders">订单统计</el-menu-item>
-          <el-menu-item index="/admin/stats/conversion">转化率统计</el-menu-item>
         </el-submenu>
         <el-menu-item index="/admin/system">
           <i class="el-icon-setting"></i>

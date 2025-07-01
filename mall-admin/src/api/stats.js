@@ -2,7 +2,7 @@ import service from './index';
 
 export function getSalesStats() {
   return service({
-    url: 'admin/stats/sales',
+    url: '/admin/stats/sales',
     method: 'get'
   });
 }
@@ -16,14 +16,14 @@ export function getSalesTrend() {
 
 export function getHotGoods() {
   return service({
-    url: 'admin/stats/hot-goods',
+    url: '/admin/stats/hot-goods',
     method: 'get'
   });
 }
 
 export function getOrderStats() {
   return service({
-    url: 'admin/stats/orders',
+    url: '/admin/stats/orders',
     method: 'get'
   });
 }
@@ -37,7 +37,7 @@ export function getOrderTrend() {
 
 export function getConversionStats() {
   return service({
-    url: 'admin/stats/conversion',
+    url: '/admin/stats/conversion',
     method: 'get'
   });
 }

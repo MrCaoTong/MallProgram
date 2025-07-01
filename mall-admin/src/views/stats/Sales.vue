@@ -31,12 +31,17 @@
         <div slot="header">近7日销售趋势</div>
         <v-chart class="chart" :option="trendOption" autoresize />
     </el-card>
+
+    <el-card style="margin-top: 20px;">
+        <div slot="header">热销商品排行 (Top 10)</div>
+        <v-chart class="chart" :option="hotGoodsOption" autoresize />
+    </el-card>
   </div>
 </template>
 
 <script>
 import VChart from 'vue-echarts';
-import { getSalesStats, getSalesTrend } from '@/api/stats';
+import { getSalesStats, getSalesTrend, getHotGoods } from '@/api/stats';
 
 export default {
   name: 'StatsSales',
@@ -44,7 +49,8 @@ export default {
   data() {
     return {
       salesStats: { today: 0, week: 0, month: 0 },
-      trendOption: {}
+      trendOption: {},
+      hotGoodsOption: {}
     };
   },
   filters: {
@@ -55,6 +61,7 @@ export default {
   created() {
     this.fetchSalesStats();
     this.fetchSalesTrend();
+    this.fetchHotGoods();
   },
   methods: {
     async fetchSalesStats() {
@@ -74,6 +81,26 @@ export default {
           data: res.data.map(item => item.sales),
           type: 'line',
           smooth: true
+        }]
+      };
+    },
+    async fetchHotGoods() {
+      const res = await getHotGoods();
+      this.hotGoodsOption = {
+        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+        xAxis: {
+          type: 'category',
+          data: res.data.map(item => item.name),
+          axisLabel: {
+              interval: 0,
+              rotate: 30
+          }
+        },
+        yAxis: { type: 'value' },
+        series: [{
+          name: '销量',
+          data: res.data.map(item => item.total_quantity),
+          type: 'bar'
         }]
       };
     }
