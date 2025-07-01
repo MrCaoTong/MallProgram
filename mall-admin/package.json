@@ -13,8 +13,10 @@
     "element-ui": "^2.15.14",
     "js-cookie": "^3.0.5",
     "nprogress": "^0.2.0",
+    "quill": "^2.0.3",
     "vue": "^2.6.14",
     "vue-echarts": "^4.1.0",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.5.4",
     "vuex": "^3.6.2"
   },

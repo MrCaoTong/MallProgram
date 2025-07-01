@@ -36,6 +36,14 @@ router.post('/category/update', auth.checkAuth, categoryController.updateCategor
 router.post('/category/delete', auth.checkAuth, categoryController.deleteCategory);
 router.post('/category/status', auth.checkAuth, categoryController.updateCategoryStatus);
 
+// 商品管理相关路由
+router.get('/goods/list', auth.checkAuth, goodsController.getGoodsList);
+router.post('/goods/add', auth.checkAuth, goodsController.addGoods);
+router.post('/goods/update', auth.checkAuth, goodsController.updateGoods);
+router.post('/goods/delete', auth.checkAuth, goodsController.deleteGoods);
+router.post('/goods/status', auth.checkAuth, goodsController.updateGoodsStatus);
+router.post('/goods/batch-status', auth.checkAuth, goodsController.batchUpdateGoodsStatus);
+
 // 订单管理
 router.get('/order/list', auth.checkAuth, orderController.getOrderList);
 router.get('/order/detail/:id', auth.checkAuth, orderController.getOrderDetail);

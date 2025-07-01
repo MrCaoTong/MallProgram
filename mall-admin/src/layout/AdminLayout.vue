@@ -6,14 +6,14 @@
           <i class="el-icon-picture"></i>
           <span slot="title">轮播图管理</span>
         </el-menu-item>
-        <el-menu-item index="/admin/category">
-          <i class="el-icon-menu"></i>
-          <span slot="title">商品分类管理</span>
-        </el-menu-item>
-        <el-menu-item index="/admin/goods">
-          <i class="el-icon-goods"></i>
-          <span slot="title">商品管理</span>
-        </el-menu-item>
+        <el-submenu index="/admin/goods">
+          <template slot="title">
+            <i class="el-icon-goods"></i>
+            <span>商品管理</span>
+          </template>
+          <el-menu-item index="/admin/category">商品分类</el-menu-item>
+          <el-menu-item index="/admin/goods">商品列表</el-menu-item>
+        </el-submenu>
         <el-menu-item index="/admin/order">
           <i class="el-icon-document"></i>
           <span slot="title">订单管理</span>
