@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "quill": "^2.0.3",
+    "vue-quill-editor": "^3.0.6"
+  }
+}
