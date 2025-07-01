@@ -2,6 +2,10 @@
   <el-container style="height: 100vh;">
     <el-aside width="220px" style="background: #2d3a4b;">
       <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#2d3a4b" text-color="#fff" active-text-color="#409EFF" router>
+        <el-menu-item index="/admin/home">
+          <i class="el-icon-s-home"></i>
+          <span slot="title">首页</span>
+        </el-menu-item>
         <el-menu-item index="/admin/banner">
           <i class="el-icon-picture"></i>
           <span slot="title">轮播图管理</span>

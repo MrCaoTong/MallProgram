@@ -55,5 +55,9 @@ router.get('/stats/sales-trend', auth.checkAuth, statsController.getSalesTrend);
 router.get('/stats/hot-goods', auth.checkAuth, statsController.getHotGoods);
 router.get('/stats/orders', auth.checkAuth, statsController.getOrderStats);
 router.get('/stats/conversion', auth.checkAuth, statsController.getConversionStats);
+router.get('/summary', auth.checkAuth, statsController.getSummary);
+router.get('/trend/sales', auth.checkAuth, statsController.getSalesTrend);
+router.get('/trend/orders', auth.checkAuth, statsController.getOrderTrend);
+router.get('/dashboard', auth.checkAuth, statsController.getDashboard);
 
 module.exports = router; 

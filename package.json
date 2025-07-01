@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "echarts": "^4.9.0",
     "quill": "^2.0.3",
+    "vue-echarts": "^4.1.0",
     "vue-quill-editor": "^3.0.6"
   }
 }

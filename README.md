@@ -12,3 +12,54 @@
 - **本次修改文件**：
   - .gitignore
   - README.md 
+
+# 商城小程序管理后台
+
+## 商品管理功能说明
+
+### 主要功能
+- 商品列表：支持按名称、分类搜索，分页展示
+- 新增商品：弹窗表单，支持商品名称、分类、主图上传、价格、库存、上架状态、商品详情（富文本）
+- 编辑商品：弹窗表单，支持所有字段编辑，富文本详情可回显
+- 删除商品：支持单个商品删除，操作后自动刷新列表
+- 批量上下架：表格多选，支持批量上架/下架操作
+
+### 前端实现要点
+- 主要页面：`mall-admin/src/views/goods/Goods.vue`
+- 富文本编辑器：`vue-quill-editor`，高度自适应，内容与后端 `description` 字段同步
+- 表单校验：所有必填项均有校验，未通过时阻止提交
+- 图片上传：通过 `/api/admin/upload` 接口实现
+- 事件绑定：所有按钮事件均已修复，弹窗内容溢出时可滚动，footer 按钮始终可见
+
+### 后端实现要点
+- 主要接口：`mall-server/src/controllers/admin/goodsController.js`，路由注册见 `mall-server/src/routes/admin.js`
+- 字段说明：商品详情富文本字段为 `description`，前后端已做字段映射
+- 权限校验：所有接口均需登录态（session/cookie）
+
+### 使用说明
+1. 启动后端服务（mall-server）：`npm run dev`
+2. 启动前端服务（mall-admin）：`npm run serve`
+3. 登录后台后进入"商品管理 > 商品列表"页面，体验完整的商品管理功能
+
+---
+
+如需扩展更多功能或遇到问题，请查阅源码注释或联系开发者。 
+
+---
+
+## 会话总结（自动追加，历史累积）
+
+- **主要目的**：为商城后台管理系统首页增加数据汇总、趋势图表等仪表盘功能。
+- **完成的主要任务**：实现首页数据卡片、近7天销售趋势和订单趋势折线图，前后端API联调，修复相关交互体验。
+- **关键决策和解决方案**：采用ECharts+vue-echarts@4实现图表，后端SQL自动补全日期，前端computed适配数据，首页作为默认入口。
+- **使用的技术栈**：Vue2、ElementUI、vue-echarts@4、ECharts、Node.js、Express、MySQL。
+- **修改了哪些文件**：
+  - mall-admin/src/views/home/Home.vue
+  - mall-admin/src/api/stats.js
+  - mall-admin/src/router/index.js
+  - mall-admin/src/layout/AdminLayout.vue
+  - mall-admin/src/main.js
+  - mall-server/src/controllers/admin/statsController.js
+  - mall-server/src/routes/admin.js
+
+（本内容为累积追加，详见 .cursorrules 约定） 

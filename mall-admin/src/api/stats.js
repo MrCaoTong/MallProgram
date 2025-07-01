@@ -9,7 +9,7 @@ export function getSalesStats() {
 
 export function getSalesTrend() {
   return service({
-    url: 'admin/stats/sales-trend',
+    url: '/admin/trend/sales',
     method: 'get'
   });
 }
@@ -28,9 +28,30 @@ export function getOrderStats() {
   });
 }
 
+export function getOrderTrend() {
+  return service({
+    url: '/admin/trend/orders',
+    method: 'get'
+  });
+}
+
 export function getConversionStats() {
   return service({
     url: 'admin/stats/conversion',
+    method: 'get'
+  });
+}
+
+export function getSummary() {
+  return service({
+    url: '/admin/summary',
+    method: 'get'
+  });
+}
+
+export function getDashboard() {
+  return service({
+    url: '/admin/dashboard',
     method: 'get'
   });
 } 

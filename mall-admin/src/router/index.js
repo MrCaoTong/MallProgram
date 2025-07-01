@@ -17,6 +17,11 @@ export default new Router({
       component: AdminLayout,
       children: [
         {
+          path: 'home',
+          name: 'Home',
+          component: () => import('../views/home/Home.vue')
+        },
+        {
           path: 'banner',
           name: 'Banner',
           component: () => import('../views/banner/Banner.vue')
@@ -73,7 +78,7 @@ export default new Router({
         },
         {
           path: '',
-          redirect: 'goods'
+          redirect: 'home'
         }
       ]
     },
