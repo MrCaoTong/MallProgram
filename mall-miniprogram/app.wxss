@@ -1,0 +1,17 @@
+/* app.wxss 全局样式 */
+page {
+  background: #f8f8f8;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20rpx;
+} 

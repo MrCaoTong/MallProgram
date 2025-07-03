@@ -1,0 +1,60 @@
+<!-- 顶部栏 -->
+<view class="top-bar">
+  <view class="location">定位</view>
+  <view class="nickname">昵称/XXX</view>
+  <image class="avatar" src="/assets/images/tab_user.png" mode="aspectFill"></image>
+</view>
+
+<!-- 搜索框 -->
+<view class="search-bar">
+  <input class="search-input" placeholder="搜索商品" />
+  <button class="search-btn">🔍</button>
+</view>
+
+<!-- 轮播图 -->
+<swiper class="banner-swiper" indicator-dots="true" autoplay="true" interval="3000" duration="500">
+  <block wx:for="{{bannerList}}" wx:key="id">
+    <swiper-item>
+      <image class="banner-img" src="{{item.image}}" mode="aspectFill"></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+<!-- 推荐商品区 -->
+<view wx:if="{{recommendList.length > 0}}">
+  <view class="section-title">推荐商品</view>
+  <scroll-view class="recommend-scroll" scroll-x="true">
+    <block wx:for="{{recommendList}}" wx:key="id">
+      <view class="goods-card">
+        <image id="goods-img-{{item.id}}" class="goods-img" src="{{item.image || '/assets/images/default.png'}}" mode="aspectFill"></image>
+        <view class="goods-name">{{item.name}}</view>
+        <view class="goods-price">￥{{item.price}}</view>
+        <view class="goods-stock">库存:{{item.stock}}</view>
+        <image class="add-cart-img" src="/assets/images/add_good.png" data-id="{{item.id}}" data-img="{{item.image || '/assets/images/default.png'}}" bindtap="addToCart" mode="aspectFit" />
+      </view>
+    </block>
+  </scroll-view>
+</view>
+
+<!-- 分类列表 -->
+<block wx:for="{{categoryList}}" wx:key="id" wx:for-item="item">
+  <view class="category-block">
+    <view class="category-header">
+      <text>{{item.name}}</text>
+      <button class="more-btn" data-id="{{item.id}}" bindtap="goCategory">更多</button>
+    </view>
+    <view class="category-goods">
+      <block wx:for="{{item.goodsList}}" wx:key="id" wx:for-item="goods">
+        <view class="goods-card small">
+          <image id="goods-img-{{goods.id}}" class="goods-img" src="{{goods.image || '/assets/images/default.png'}}" mode="aspectFill"></image>
+          <view class="goods-name">{{goods.name}}</view>
+          <view class="goods-price">￥{{goods.price}}</view>
+          <image class="add-cart-img" src="/assets/images/add_good.png" data-id="{{goods.id}}" data-img="{{goods.image || '/assets/images/default.png'}}" bindtap="addToCart" mode="aspectFit" />
+        </view>
+      </block>
+    </view>
+  </view>
+</block>
+
+<!-- 动画图片 -->
+<image wx:if="{{animating}}" class="fly-img" src="{{animImage}}" style="{{animStyle}}"></image> 

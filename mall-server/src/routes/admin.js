@@ -44,6 +44,7 @@ router.post('/goods/update', auth.checkAuth, goodsController.updateGoods);
 router.post('/goods/delete', auth.checkAuth, goodsController.deleteGoods);
 router.post('/goods/status', auth.checkAuth, goodsController.updateGoodsStatus);
 router.post('/goods/batch-status', auth.checkAuth, goodsController.batchUpdateGoodsStatus);
+router.post('/goods/recommend', auth.checkAuth, goodsController.updateRecommend);
 
 // 订单管理
 router.get('/order/list', auth.checkAuth, orderController.getOrderList);

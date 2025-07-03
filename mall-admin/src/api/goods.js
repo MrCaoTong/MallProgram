@@ -47,4 +47,12 @@ export function batchUpdateGoodsStatus(ids, status) {
       method: 'post',
       data: { ids, status }
     });
-  } 
+  }
+
+export function updateRecommend(data) {
+  return service({
+    url: '/admin/goods/recommend',
+    method: 'post',
+    data
+  });
+} 

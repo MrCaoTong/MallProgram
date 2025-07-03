@@ -30,6 +30,16 @@
             <el-switch v-else v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeStatus(scope.row)" />
           </template>
         </el-table-column>
+        <el-table-column prop="is_recommend" label="推荐" width="80">
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.is_recommend"
+              :active-value="1"
+              :inactive-value="0"
+              @change="val => handleRecommendChange(scope.row, val)"
+            />
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
             <el-button size="mini" @click="openEditDialog(scope.row)">编辑</el-button>
@@ -84,7 +94,7 @@
 </template>
 
 <script>
-import { getGoods, addGoods, updateGoods, deleteGoods, batchUpdateGoodsStatus, updateGoodsStatus } from '@/api/goods';
+import { getGoods, addGoods, updateGoods, deleteGoods, batchUpdateGoodsStatus, updateGoodsStatus, updateRecommend } from '@/api/goods';
 import { getCategories } from '@/api/category';
 import { quillEditor } from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
@@ -237,6 +247,17 @@ export default {
         // 回滚状态
         row.status = row.status === 1 ? 0 : 1;
         this.$message.error((e.response && e.response.data && e.response.data.message) || '操作失败');
+      }
+    },
+    async handleRecommendChange(row, val) {
+      try {
+        await updateRecommend({ id: row.id, is_recommend: val });
+        this.$message.success('修改成功');
+        this.fetchGoods();
+      } catch (e) {
+        this.$message.error((e.response && e.response.data && (e.response.data.msg || e.response.data.message)) || '操作失败');
+        // 回滚 UI 状态
+        row.is_recommend = !val;
       }
     }
   }

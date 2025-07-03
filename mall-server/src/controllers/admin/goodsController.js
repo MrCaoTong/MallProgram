@@ -137,4 +137,12 @@ exports.batchUpdateGoodsStatus = async (req, res) => {
     console.error(error);
     res.status(500).json({ code: 500, message: '服务器错误' });
   }
+};
+
+// 修改商品推荐状态
+exports.updateRecommend = async (req, res) => {
+  const { id, is_recommend } = req.body;
+  if (!id) return res.status(400).json({ code: 1, msg: 'id必传' });
+  await pool.query('UPDATE goods SET is_recommend=? WHERE id=?', [is_recommend, id]);
+  res.json({ code: 200, msg: '修改成功' });
 }; 
