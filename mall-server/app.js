@@ -5,10 +5,14 @@ const session = require('express-session');
 const path = require('path');
 const adminRoutes = require('./src/routes/admin');
 const fs = require('fs');
+const dotenv = require('dotenv');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 // const uploadController = require('./src/controllers/admin/uploadController'); //不再需要
+const config = require('./config');
 
 const app = express();
-const port = 3000;
+const port = config.port;
 
 // 【重要】信任代理，以确保session在代理环境下正常工作
 app.set('trust proxy', 1);
@@ -49,6 +53,26 @@ app.use('/admin', adminRoutes);
 
 // 上传接口 (已移至 admin.js)
 // app.post('/admin/upload', auth.checkAuth, uploadController.uploadMiddleware, uploadController.uploadImage);
+
+dotenv.config();
+app.use(helmet());
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 200 }));
+
+const userRoutes = require('./src/routes/user');
+const goodsRoutes = require('./src/routes/goods');
+const categoryRoutes = require('./src/routes/category');
+const bannerRoutes = require('./src/routes/banner');
+const cartRoutes = require('./src/routes/cart');
+const addressRoutes = require('./src/routes/address');
+const orderRoutes = require('./src/routes/order');
+
+app.use('/api/user', userRoutes);
+app.use('/api/goods', goodsRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/banner', bannerRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/address', addressRoutes);
+app.use('/api/order', orderRoutes);
 
 app.listen(port, () => {
   console.log(`后端服务已启动，监听端口 ${port}`);

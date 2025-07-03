@@ -6,12 +6,12 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000', // 后端API服务地址
+        target: 'http://localhost:4000', // 后端API服务地址
         changeOrigin: true,
         pathRewrite: { '^/api': '' }
       },
       '/uploads': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:4000',
         changeOrigin: true,
       }
     }

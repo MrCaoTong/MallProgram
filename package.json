@@ -1,6 +1,12 @@
 {
   "dependencies": {
+    "dotenv": "^17.0.1",
     "echarts": "^4.9.0",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
+    "mysql2": "^3.14.1",
     "quill": "^2.0.3",
     "vue-echarts": "^4.1.0",
     "vue-quill-editor": "^3.0.6"
