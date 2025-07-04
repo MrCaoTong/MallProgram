@@ -1,6 +1,7 @@
 const config = require('../config/config');
 
 function request({ url, method = 'GET', data = {}, header = {} }) {
+  // mock token for dev
   return new Promise((resolve, reject) => {
     wx.request({
       url: config.apiBaseUrl + url,

@@ -1,3 +1,62 @@
 .container {
   padding: 20rpx;
 } 
+
+.address-card {
+  background: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 24rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+.address-card.default {
+  border: 2rpx solid #07c160;
+}
+.address-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.address-detail {
+  color: #888;
+  margin: 12rpx 0 0 0;
+  font-size: 28rpx;
+}
+.address-actions {
+  margin-top: 16rpx;
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+.default-tag {
+  color: #fff;
+  background: #07c160;
+  border-radius: 8rpx;
+  padding: 4rpx 16rpx;
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+.add-btn-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 40rpx;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+.add-btn {
+  width: 90vw;
+  background: #07c160;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+  margin-top: 24rpx;
+}
+.empty {
+  text-align: center;
+  color: #bbb;
+  margin: 80rpx 0;
+  font-size: 28rpx;
+} 

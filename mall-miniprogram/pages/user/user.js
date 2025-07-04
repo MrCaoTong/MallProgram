@@ -81,9 +81,6 @@ Page({
   goOrder() {
     wx.navigateTo({ url: '/pages/order/order' });
   },
-  goFavorite() {
-    wx.showToast({ title: '我的收藏功能待实现', icon: 'none' });
-  },
   goAddress() {
     wx.navigateTo({ url: '/pages/address/address' });
   }

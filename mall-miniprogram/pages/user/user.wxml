@@ -12,7 +12,6 @@
   </view>
   <view class="user-section">
     <button class="user-btn" bindtap="goOrder">我的订单</button>
-    <button class="user-btn" bindtap="goFavorite">我的收藏</button>
     <button class="user-btn" bindtap="goAddress">收货地址</button>
   </view>
   <view class="user-footer">
