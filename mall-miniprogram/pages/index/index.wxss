@@ -2,51 +2,6 @@
   padding: 20rpx;
 } 
 
-/* 顶部栏 */
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20rpx 20rpx 0 20rpx;
-}
-.location {
-  font-size: 28rpx;
-  color: #1296db;
-}
-.nickname {
-  flex: 1;
-  text-align: center;
-  font-size: 28rpx;
-  color: #333;
-}
-.avatar {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-}
-
-/* 搜索栏 */
-.search-bar {
-  display: flex;
-  align-items: center;
-  margin: 20rpx;
-  background: #f5f5f5;
-  border-radius: 30rpx;
-  padding: 10rpx 20rpx;
-}
-.search-input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  font-size: 28rpx;
-}
-.search-btn {
-  background: none;
-  border: none;
-  font-size: 32rpx;
-  color: #1296db;
-}
-
 /* 轮播图 */
 .banner-swiper {
   width: 100%;
@@ -113,6 +68,7 @@
   border-radius: 16rpx;
   box-shadow: 0 2rpx 8rpx #eee;
   padding: 16rpx 0 10rpx 0;
+  position: relative;
 }
 .category-header {
   width: 100%;
@@ -129,10 +85,22 @@
   background: none;
   border: none;
 }
+.more-btn-float {
+  position: absolute;
+  right: 24rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 64rpx;
+  height: 64rpx;
+  z-index: 99;
+  cursor: pointer;
+}
 .category-goods {
+  position: relative;
   display: flex;
   flex-direction: row;
   padding: 0 20rpx;
+  z-index: 1;
 }
 .goods-card.small {
   width: 160rpx;

@@ -15,6 +15,16 @@ Page({
     this.getRecommend();
     this.getCategoryGoods();
   },
+  onShow() {
+    // 每次页面显示时同步购物车数量
+    const cartCount = wx.getStorageSync('cartCount') || 0;
+    this.setData({ cartCount });
+    if (cartCount > 0) {
+      wx.setTabBarBadge({ index: 2, text: String(cartCount) });
+    } else {
+      wx.removeTabBarBadge({ index: 2 });
+    }
+  },
   getBanner() {
     wx.request({
       url: config.apiBaseUrl + '/banner/list',
@@ -75,13 +85,14 @@ Page({
                 animStyle: `left:${to.left}px;top:${to.top}px;transform:scale(0.2);opacity:0;`
               });
               setTimeout(() => {
-                const newCount = this.data.cartCount + 1;
+                let newCount = this.data.cartCount + 1;
                 this.setData({
                   animating: false,
                   animImage: '',
                   animStyle: '',
                   cartCount: newCount
                 });
+                wx.setStorageSync('cartCount', newCount);
                 wx.setTabBarBadge({
                   index: 2,
                   text: String(newCount)
@@ -90,8 +101,9 @@ Page({
             }, 20);
           } else {
             // fallback: 直接加数量
-            const newCount = this.data.cartCount + 1;
+            let newCount = this.data.cartCount + 1;
             this.setData({ cartCount: newCount });
+            wx.setStorageSync('cartCount', newCount);
             wx.setTabBarBadge({
               index: 2,
               text: String(newCount)
@@ -104,6 +116,8 @@ Page({
   },
   goCategory(e) {
     const categoryId = e.currentTarget.dataset.id;
-    wx.navigateTo({ url: `/pages/category/category?id=${categoryId}` });
+    console.log('点击更多按钮，跳转分类id:', categoryId);
+    wx.setStorageSync('categoryId', categoryId);
+    wx.switchTab({ url: '/pages/category/category' });
   }
 }); 

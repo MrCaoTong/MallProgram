@@ -27,7 +27,7 @@ exports.getGoodsList = async (req, res) => {
       FROM goods g
       LEFT JOIN category c ON g.category_id = c.id
       ${whereClause}
-      ORDER BY g.id DESC
+      ORDER BY g.sort DESC, g.id DESC
       LIMIT ? OFFSET ?
     `;
     const [rows] = await pool.query(sql, [...params, parseInt(limit), parseInt(offset)]);
@@ -48,11 +48,11 @@ exports.getGoodsList = async (req, res) => {
 
 // 新增商品
 exports.addGoods = async (req, res) => {
-  const { category_id, name, image, price, stock, status, description } = req.body;
+  const { category_id, name, image, price, stock, status, description, sort = 0 } = req.body;
   try {
     const [result] = await pool.query(
-      'INSERT INTO goods (category_id, name, image, price, stock, status, description) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [category_id, name, image, price, stock, status, description]
+      'INSERT INTO goods (category_id, name, image, price, stock, status, description, sort) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [category_id, name, image, price, stock, status, description, sort]
     );
     res.json({ code: 200, message: '新增成功', data: { id: result.insertId } });
   } catch (error) {
@@ -63,11 +63,11 @@ exports.addGoods = async (req, res) => {
 
 // 更新商品
 exports.updateGoods = async (req, res) => {
-  const { id, category_id, name, image, price, stock, status, description } = req.body;
+  const { id, category_id, name, image, price, stock, status, description, sort } = req.body;
   try {
     await pool.query(
-      'UPDATE goods SET category_id = ?, name = ?, image = ?, price = ?, stock = ?, status = ?, description = ? WHERE id = ?',
-      [category_id, name, image, price, stock, status, description, id]
+      'UPDATE goods SET category_id = ?, name = ?, image = ?, price = ?, stock = ?, status = ?, description = ?, sort = ? WHERE id = ?',
+      [category_id, name, image, price, stock, status, description, sort, id]
     );
     res.json({ code: 200, message: '更新成功' });
   } catch (error) {

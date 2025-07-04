@@ -5,7 +5,12 @@ const goodsController = {
     const { page = 1, pageSize = 10, category_id, keyword } = req.query;
     const offset = (parseInt(page) - 1) * parseInt(pageSize);
     const goods = await Goods.findAll({ offset, limit: parseInt(pageSize), category_id, keyword });
-    res.json({ code: 0, data: goods });
+    const baseUrl = req.protocol + '://' + req.get('host');
+    const data = goods.map(item => ({
+      ...item,
+      image: item.image && !item.image.startsWith('http') ? baseUrl + item.image : item.image
+    }));
+    res.json({ code: 0, data });
   },
   async detail(req, res) {
     const { id } = req.query;

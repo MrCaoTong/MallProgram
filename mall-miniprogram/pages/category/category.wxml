@@ -1,3 +1,44 @@
-<view class="container">
-  <text>分类内容</text>
+<view class="category-tree-page">
+  <view class="category-search-bar">
+    <view class="search-box">
+      <image class="search-icon" src="/assets/images/search.png" />
+      <input
+        class="search-input"
+        placeholder="搜索分类及商品"
+        value="{{searchText}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+      />
+    </view>
+  </view>
+  <view class="category-tree-container">
+    <!-- 左侧分类 -->
+    <scroll-view class="category-tree-left" scroll-y="true">
+      <block wx:for="{{filteredCategories}}" wx:key="id">
+        <view
+          class="category-tree-item {{activeIndex === index ? 'active' : ''}}"
+          bindtap="onCategoryTap"
+          data-index="{{index}}"
+        >
+          {{item.name}}
+        </view>
+      </block>
+    </scroll-view>
+    <!-- 右侧商品 -->
+    <scroll-view class="category-tree-right" scroll-y="true">
+      <block wx:for="{{goodsList}}" wx:key="id">
+        <view class="goods-item">
+          <image id="goods-img-{{item.id}}" class="goods-img" src="{{item.image ? item.image : '/assets/images/default.png'}}" mode="aspectFill"/>
+          <view class="goods-info">
+            <text class="goods-name">{{item.name}}</text>
+            <text class="goods-desc">{{item.description}}</text>
+            <view class="goods-price">￥{{item.price}}</view>
+          </view>
+          <image class="add-cart-img" src="/assets/images/add_good.png" data-id="{{item.id}}" data-img="{{item.image ? item.image : '/assets/images/default.png'}}" bindtap="addToCart" mode="aspectFit" />
+        </view>
+      </block>
+      <view wx:if="{{goodsList.length === 0}}" class="empty-tip">暂无商品</view>
+    </scroll-view>
+  </view>
+  <image wx:if="{{animating}}" class="fly-img" src="{{animImage}}" style="{{animStyle}}"></image>
 </view> 

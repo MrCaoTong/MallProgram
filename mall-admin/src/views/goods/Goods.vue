@@ -11,46 +11,53 @@
         <el-button @click="batchChangeStatus(1)" style="margin-left: 10px;">批量上架</el-button>
         <el-button @click="batchChangeStatus(0)" style="margin-left: 10px;">批量下架</el-button>
       </div>
-      <el-table :data="goodsList" border @selection-change="handleSelectionChange" style="width: 100%">
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="name" label="商品名称" />
-        <el-table-column prop="image" label="图片" width="100">
-          <template slot-scope="scope">
-            <el-image :src="scope.row.image" style="width: 80px; height: 80px;" fit="cover" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="price" label="价格" width="100" />
-        <el-table-column prop="stock" label="库存" width="80" />
-        <el-table-column prop="category_name" label="所属分类" />
-        <el-table-column prop="status" label="上架状态" width="100">
-          <template slot-scope="scope">
-            <el-tooltip v-if="scope.row.category_status === 0" content="该分类已被禁用，需要将该商品分类打开，才能上架" placement="top">
-              <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" :disabled="true" @change="changeStatus(scope.row)" />
-            </el-tooltip>
-            <el-switch v-else v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeStatus(scope.row)" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="is_recommend" label="推荐" width="80">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.is_recommend"
-              :active-value="1"
-              :inactive-value="0"
-              @change="val => handleRecommendChange(scope.row, val)"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="180">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="openEditDialog(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="deleteGoods(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <div style="overflow-x: auto;">
+        <el-table :data="goodsList" border @selection-change="handleSelectionChange" style="min-width: 1200px;">
+          <el-table-column type="selection" width="55" />
+          <el-table-column prop="name" label="商品名称" />
+          <el-table-column prop="image" label="图片" width="100">
+            <template slot-scope="scope">
+              <el-image :src="scope.row.image" style="width: 80px; height: 80px;" fit="cover" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="price" label="价格" width="100" />
+          <el-table-column prop="stock" label="库存" width="80" />
+          <el-table-column prop="category_name" label="所属分类" />
+          <el-table-column prop="status" label="上架状态" width="100">
+            <template slot-scope="scope">
+              <el-tooltip v-if="scope.row.category_status === 0" content="该分类已被禁用，需要将该商品分类打开，才能上架" placement="top">
+                <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" :disabled="true" @change="changeStatus(scope.row)" />
+              </el-tooltip>
+              <el-switch v-else v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeStatus(scope.row)" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="is_recommend" label="推荐" width="80">
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.is_recommend"
+                :active-value="1"
+                :inactive-value="0"
+                @change="val => handleRecommendChange(scope.row, val)"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column prop="sort" label="排序" width="80">
+            <template slot-scope="scope">
+              <span>{{ scope.row.sort }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="180">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="openEditDialog(scope.row)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="deleteGoods(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </el-card>
     <!-- 新增/编辑商品弹窗 -->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="60%" append-to-body>
-      <el-form :model="form" :rules="rules" ref="form" label-width="100px" style="max-height:60vh;overflow-y:auto;">
+      <el-form :model="form" :rules="rules" ref="form" label-width="100px" style="max-height:60vh;overflow-y:auto;" class="goods-dialog-form">
         <el-form-item label="商品名称" prop="name">
           <el-input v-model="form.name" />
         </el-form-item>
@@ -73,16 +80,19 @@
           </el-upload>
         </el-form-item>
         <el-form-item label="价格" prop="price">
-          <el-input-number v-model="form.price" :min="0" :step="0.01" />
+          <el-input-number v-model="form.price" :min="0" :step="0.01" style="width: 200px;" />
         </el-form-item>
         <el-form-item label="库存" prop="stock">
-          <el-input-number v-model="form.stock" :min="0" />
+          <el-input-number v-model="form.stock" :min="0" style="width: 200px;" />
+        </el-form-item>
+        <el-form-item label="排序" prop="sort" class="form-sort-item">
+          <el-input-number v-model="form.sort" :min="0" style="width: 200px;" />
         </el-form-item>
         <el-form-item label="上架状态" prop="status">
           <el-switch v-model="form.status" :active-value="1" :inactive-value="0" />
         </el-form-item>
         <el-form-item label="商品详情" prop="detail">
-          <quill-editor v-model="form.detail" :options="editorOption" style="height:120px;" />
+          <quill-editor v-model="form.detail" :options="editorOption" style="height:120px; max-width: 100%;" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -120,7 +130,8 @@ export default {
         price: 0,
         stock: 0,
         status: 1,
-        detail: ''
+        detail: '',
+        sort: 0
       },
       rules: {
         name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
@@ -170,7 +181,7 @@ export default {
     },
     openAddDialog() {
       this.dialogTitle = '新增商品';
-      this.form = { id: null, name: '', category_id: '', image: '', price: 0, stock: 0, status: 1, detail: '' };
+      this.form = { id: null, name: '', category_id: '', image: '', price: 0, stock: 0, status: 1, detail: '', sort: 0 };
       this.dialogVisible = true;
     },
     handleUploadSuccess(res) {
@@ -259,12 +270,17 @@ export default {
         // 回滚 UI 状态
         row.is_recommend = !val;
       }
+    },
+    async updateSort(row) {
+      await updateGoods({ id: row.id, sort: row.sort });
+      this.$message.success('排序已更新');
+      this.fetchGoods();
     }
   }
 };
 </script>
 
-<style scoped>
+<style>
 .goods-page {
   padding: 20px;
 }
@@ -281,14 +297,20 @@ export default {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 80px;
-  height: 80px;
-  line-height: 80px;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
   text-align: center;
 }
 .avatar {
-  width: 80px;
-  height: 80px;
+  width: 178px;
+  height: 178px;
   display: block;
+}
+.form-sort-item {
+  margin-top: 0;
+}
+.goods-dialog-form .el-form-item {
+  width: 100%;
 }
 </style> 
