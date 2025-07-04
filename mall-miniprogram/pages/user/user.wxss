@@ -1,3 +1,91 @@
 .container {
   padding: 20rpx;
 } 
+
+/* 我的页面整体样式 */
+.user-page {
+  min-height: 100vh;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 0 24rpx 0;
+  background: #fff;
+}
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-bottom: 16rpx;
+  background: #f5f5f5;
+}
+.user-nickname {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: bold;
+}
+.user-section {
+  width: 90%;
+  margin: 32rpx 0 0 0;
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 0;
+}
+.user-btn {
+  width: 80%;
+  margin: 16rpx 0;
+  font-size: 28rpx;
+  color: #1296db;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 24rpx;
+  padding: 18rpx 0;
+}
+.user-footer {
+  width: 100%;
+  margin-top: 48rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logout-btn, .login-btn {
+  width: 80%;
+  font-size: 28rpx;
+  color: #fff;
+  background: #e64340;
+  border: none;
+  border-radius: 24rpx;
+  padding: 18rpx 0;
+  margin-bottom: 24rpx;
+}
+.login-btn {
+  background: #1296db;
+}
+/* 顶部登录按钮专用样式 */
+.user-nickname .login-btn {
+  background: #1296db;
+  width: 180rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  font-size: 28rpx;
+  color: #fff;
+  border: none;
+  border-radius: 32rpx;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 4rpx;
+  box-shadow: none;
+} 
