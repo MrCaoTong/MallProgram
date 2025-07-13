@@ -2,12 +2,12 @@ const ENV = 'development'; // 或 'production'
 
 const config = {
   development: {
-    apiBaseUrl: 'http://localhost:4000/api',
-    uploadUrl: 'http://localhost:4000/uploads/'
+    apiBaseUrl: 'http://192.168.2.56:4000/api',
+    uploadUrl: 'http://192.168.2.56:4000/uploads/'
   },
   production: {
-    apiBaseUrl: 'https://mall-server.guoxu.tech/api',
-    uploadUrl: 'https://mall-server.guoxu.tech/uploads/'
+    apiBaseUrl: 'https://www.ctdevelopment.cn/api',
+    uploadUrl: 'https://www.ctdevelopment.cn/uploads/'
   }
 };
 

@@ -9,6 +9,6 @@ module.exports = {
     database: process.env.DB_NAME
   },
   uploadDir: 'cloud-uploads',
-  apiBaseUrl: process.env.BASE_URL || 'https://mall-server.guoxu.tech',
+  apiBaseUrl: process.env.BASE_URL || 'https://www.ctdevelopment.cn',
   debug: false
 }; 

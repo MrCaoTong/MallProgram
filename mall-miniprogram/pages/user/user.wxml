@@ -2,7 +2,6 @@
   <!-- 顶部头像昵称/登录 -->
   <view class="user-header">
     <image class="user-avatar" src="{{userInfo.avatarUrl || '/assets/images/tab_user.png'}}" mode="aspectFill" />
-    <text>{{userInfo.avatarUrl}}</text>
     <view class="user-nickname">
       <block wx:if="{{isLogin}}">{{userInfo.nickName}}</block>
       <block wx:else>

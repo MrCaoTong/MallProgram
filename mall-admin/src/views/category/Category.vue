@@ -10,7 +10,7 @@
         <el-table-column prop="name" label="分类名称"></el-table-column>
         <el-table-column label="图片" width="120">
           <template slot-scope="scope">
-            <el-image v-if="scope.row.image" :src="scope.row.image" style="width: 50px; height: 50px" fit="cover" :preview-src-list="[scope.row.image]"></el-image>
+            <el-image v-if="scope.row.image" :src="getImageUrl(scope.row.image)" style="width: 50px; height: 50px" fit="cover" :preview-src-list="[getImageUrl(scope.row.image)]"></el-image>
             <span v-else>无图</span>
           </template>
         </el-table-column>
@@ -45,12 +45,12 @@
         <el-form-item label="分类图片" prop="image">
           <el-upload
             class="avatar-uploader"
-            action="/api/admin/upload"
+            :action="uploadUrl"
             :show-file-list="false"
             :on-success="handleUploadSuccess"
             :before-upload="beforeUpload"
             with-credentials>
-            <img v-if="form.image" :src="form.image" class="avatar">
+            <img v-if="form.image" :src="getImageUrl(form.image)" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -65,6 +65,8 @@
 
 <script>
 import { getAllCategories, addCategory, updateCategory, deleteCategory, updateCategoryStatus } from '@/api/category';
+import config from '@/config';
+import { getImageUrl } from '@/utils/util';
 
 export default {
   name: 'Category',
@@ -73,6 +75,7 @@ export default {
       categoryList: [],
       dialogVisible: false,
       dialogTitle: '',
+      apiUrl: config.apiUrl,
       form: {
         id: null,
         name: '',
@@ -85,10 +88,17 @@ export default {
       }
     };
   },
+  computed: {
+    uploadUrl() {
+      return `${this.apiUrl}/api/admin/upload`;
+    }
+  },
   created() {
+    console.log('getImageUrl test:', getImageUrl('/uploads/test.png'));
     this.fetchCategories();
   },
   methods: {
+    getImageUrl,
     async fetchCategories() {
       const res = await getAllCategories();
       this.categoryList = res.data;

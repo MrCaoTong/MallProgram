@@ -11,6 +11,6 @@ module.exports = {
   },
   fileUpload: 'local',
   logLevel: 'debug',
-  apiUrl: 'http://localhost:4000',
+  apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:4000',
   debug: true,
 } 

@@ -1,3 +1,5 @@
+const request = require('../../utils/request');
+
 Page({
   data: {
     isLogin: false,
@@ -7,22 +9,31 @@ Page({
   onLoad() {
     wx.login({
       success: res => {
+        console.log('wx.login返回:', res);
         if (res.code) {
-          wx.request({
-            url: 'http://localhost:4000/api/user/login',
+          console.log('wx.login code:', res.code);
+          request({
+            url: '/user/login',
             method: 'POST',
-            data: { code: res.code },
-            success: resp => {
-              if (resp.data.code === 0) {
-                wx.setStorageSync('openid', resp.data.data.openid);
-                this.setData({ openidReady: true });
-                console.log('onLoad获取到openid:', resp.data.data.openid);
-              } else {
-                console.log('onLoad获取openid失败', resp.data);
-              }
+            data: { code: res.code }
+          }).then(resp => {
+            console.log('request /user/login 返回:', resp);
+            if (resp.code === 0) {
+              wx.setStorageSync('openid', resp.data.openid);
+              this.setData({ openidReady: true });
+              console.log('onLoad获取到openid:', resp.data.openid);
+            } else {
+              console.log('onLoad获取openid失败', resp);
             }
+          }).catch(err => {
+            console.log('request /user/login 失败:', err);
           });
+        } else {
+          console.log('wx.login未获取到code', res);
         }
+      },
+      fail: err => {
+        console.log('wx.login失败:', err);
       }
     });
     // 检查本地是否已登录
@@ -38,34 +49,29 @@ Page({
     console.log('onShow userInfo', this.data.userInfo);
   },
   onGetUserInfo() {
-    console.log('点击登录按钮');
-    const openid = wx.getStorageSync('openid');
-    console.log('onGetUserInfo读取到openid:', openid);
-    if (!openid) {
-      wx.showToast({ title: 'openid未获取到，请稍后再试', icon: 'none' });
-      return;
-    }
+    // 只在点击登录按钮时调用微信授权
     wx.getUserProfile({
       desc: '用于完善会员资料',
       success: res => {
         console.log('getUserProfile返回', res);
-        wx.request({
-          url: 'http://localhost:4000/api/user/info',
+        const openid = wx.getStorageSync('openid');
+        request({
+          url: '/user/info',
           method: 'POST',
           data: {
             openid,
             avatarUrl: res.userInfo.avatarUrl,
             nickName: res.userInfo.nickName
-          },
-          success: resp => {
-            console.log('后端返回', resp);
-            if (resp.data.code === 0) {
-              wx.setStorageSync('userInfo', res.userInfo);
-              this.setData({ isLogin: true, userInfo: res.userInfo });
-              console.log('setData后 userInfo', this.data.userInfo);
-              wx.showToast({ title: '登录成功', icon: 'success' });
-            }
           }
+        }).then(resp => {
+          console.log('后端返回', resp);
+          if (resp.code === 0) {
+            wx.setStorageSync('userInfo', res.userInfo);
+            this.setData({ isLogin: true, userInfo: res.userInfo });
+            wx.showToast({ title: '登录成功', icon: 'success' });
+          }
+        }).catch(err => {
+          console.log('request /user/info 失败:', err);
         });
       },
       fail: err => {

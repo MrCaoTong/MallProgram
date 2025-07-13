@@ -12,6 +12,6 @@ module.exports = {
   },
   fileUpload: 'cloud',
   logLevel: 'debug',
-  apiUrl: 'https://mall-server.guoxu.tech',
+  apiUrl: 'https://www.ctdevelopment.cn',
   debug: false,
 } 

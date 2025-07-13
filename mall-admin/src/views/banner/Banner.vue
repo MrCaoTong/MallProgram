@@ -10,7 +10,7 @@
         <el-table-column prop="title" label="标题"></el-table-column>
         <el-table-column label="图片" width="120">
           <template slot-scope="scope">
-            <el-image :src="scope.row.image" style="width: 100px; height: 50px" fit="cover" :preview-src-list="[scope.row.image]"></el-image>
+            <el-image :src="getImageUrl(scope.row.image)" style="width: 100px; height: 50px" fit="cover" :preview-src-list="[getImageUrl(scope.row.image)]"></el-image>
           </template>
         </el-table-column>
         <el-table-column prop="link" label="跳转链接"></el-table-column>
@@ -48,12 +48,12 @@
         <el-form-item label="图片" prop="image">
           <el-upload
             class="avatar-uploader"
-            action="/api/admin/upload"
+            :action="uploadUrl"
             :show-file-list="false"
             :on-success="handleUploadSuccess"
             :before-upload="beforeUpload"
             with-credentials>
-            <img v-if="form.image" :src="form.image" class="avatar">
+            <img v-if="form.image" :src="getImageUrl(form.image)" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -68,6 +68,8 @@
 
 <script>
 import { getBanners, addBanner, updateBanner, deleteBanner, updateBannerStatus } from '@/api/banner';
+import config from '@/config';
+import { getImageUrl } from '@/utils/util';
 
 export default {
   name: 'Banner',
@@ -76,6 +78,7 @@ export default {
       bannerList: [],
       dialogVisible: false,
       dialogTitle: '',
+      apiUrl: config.apiUrl,
       form: {
         id: null,
         title: '',
@@ -86,7 +89,13 @@ export default {
       },
     };
   },
+  computed: {
+    uploadUrl() {
+      return `${this.apiUrl}/api/admin/upload`;
+    }
+  },
   created() {
+    console.log('Banner.vue getImageUrl test:', getImageUrl('/uploads/test.png'));
     this.fetchBanners();
   },
   methods: {

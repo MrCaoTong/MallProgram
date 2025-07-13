@@ -1,10 +1,11 @@
 const config = require('../config/config');
 
 function request({ url, method = 'GET', data = {}, header = {} }) {
-  // mock token for dev
+  // 如果url不是http开头，自动拼接apiBaseUrl
+  const fullUrl = url.startsWith('http') ? url : config.apiBaseUrl + url;
   return new Promise((resolve, reject) => {
     wx.request({
-      url: config.apiBaseUrl + url,
+      url: fullUrl,
       method,
       data,
       header: {

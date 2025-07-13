@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
+import config from '@/config';
 
 const service = axios.create({
-  baseURL: '/api', // 使用代理，不再直接指向后端地址
+  baseURL: config.apiUrl, // 使用配置文件中的 API 地址
   timeout: 10000,
   withCredentials: true
 });

@@ -17,7 +17,7 @@
           <el-table-column prop="name" label="商品名称" />
           <el-table-column prop="image" label="图片" width="100">
             <template slot-scope="scope">
-              <el-image :src="scope.row.image" style="width: 80px; height: 80px;" fit="cover" />
+              <el-image :src="getImageUrl(scope.row.image)" style="width: 80px; height: 80px;" fit="cover" />
             </template>
           </el-table-column>
           <el-table-column prop="price" label="价格" width="100" />
@@ -69,13 +69,13 @@
         <el-form-item label="商品主图" prop="image">
           <el-upload
             class="avatar-uploader"
-            action="/api/admin/upload"
+            :action="uploadUrl"
             :show-file-list="false"
             :on-success="handleUploadSuccess"
             :before-upload="beforeUpload"
             :headers="uploadHeaders"
             with-credentials>
-            <img v-if="form.image" :src="form.image" class="avatar" />
+            <img v-if="form.image" :src="getImageUrl(form.image)" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
@@ -110,6 +110,8 @@ import { quillEditor } from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
+import config from '@/config';
+import { getImageUrl } from '@/utils/util';
 
 export default {
   name: 'Goods',
@@ -122,6 +124,7 @@ export default {
       searchCategory: '',
       dialogVisible: false,
       dialogTitle: '新增商品',
+      apiUrl: config.apiUrl,
       form: {
         id: null,
         name: '',
@@ -146,11 +149,18 @@ export default {
       multipleSelection: []
     };
   },
+  computed: {
+    uploadUrl() {
+      return `${this.apiUrl}/api/admin/upload`;
+    }
+  },
   created() {
+    console.log('Goods.vue getImageUrl test:', getImageUrl('/uploads/test.png'));
     this.fetchGoods();
     this.fetchCategories();
   },
   methods: {
+    getImageUrl,
     async fetchGoods() {
       const params = {};
       if (this.searchName) params.name = this.searchName;

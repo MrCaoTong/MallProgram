@@ -2,9 +2,10 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const config = require('../../../config/config.development.js'); // 可根据环境自动切换
 
 // 确保上传目录存在
-const uploadDir = path.join(__dirname, '../../../uploads');
+const uploadDir = config.uploadDir ? path.join(__dirname, '../../../', config.uploadDir) : path.join(__dirname, '../../../uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -28,7 +29,7 @@ exports.uploadImage = (req, res) => {
     return res.status(400).json({ code: 400, message: '没有上传文件' });
   }
   // 返回可访问的URL
-  const fileUrl = `/uploads/${req.file.filename}`;
+  const fileUrl = `${config.uploadDir ? '/' + config.uploadDir.replace(/\\/g, '/') : '/uploads'}/${req.file.filename}`;
   res.json({
     code: 200,
     message: '上传成功',
